@@ -6,6 +6,16 @@
 %
 
 % Daniel Motz's packages
+\usepackage{etoolbox}
+\makeatletter
+\let\llncs@addcontentsline\addcontentsline
+\patchcmd{\maketitle}{\addcontentsline}{\llncs@addcontentsline}{}{}
+\patchcmd{\maketitle}{\addcontentsline}{\llncs@addcontentsline}{}{}
+\patchcmd{\maketitle}{\addcontentsline}{\llncs@addcontentsline}{}{}
+\setcounter{tocdepth}{3}
+\makeatother
+\usepackage{bookmark}
+
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{stmaryrd}
@@ -41,17 +51,22 @@
 \titlerunning{
     Automaten \& Berechenbarkeit
 }%
-\author{Maximilian Stock, Daniel Motz}
+\author{
+    Dr. Jörg Vogel \and 
+    Maximilian Stock \and 
+    Daniel Motz
+}
 %
-\authorrunning{J. Vogel, M. Stock, D. Motz}
+\authorrunning{Vogel, Stock, Motz}
 %
 \institute{Fakultät für Mathematik und Informatik, Friedrich-Schiller-University,\\ Jena, Germany\\
 \vspace{.2cm}
-\email{maximilian.stock@uni-jena.de, daniel.motz@uni-jena.de}
+\email{\{maximilian.stock, daniel.motz\}@uni-jena.de}
 }
 %
-\maketitle % typeset the header of the contribution
+\maketitle
 %
+\pagebreak
 
 \section{Endliche Automaten und reguläre Sprachen}
 

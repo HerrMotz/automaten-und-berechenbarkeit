@@ -1,4 +1,4 @@
-% LLNCS DOCUMENT CLASS -- version 2.21 (12-Jan-2022)
+% LLNCS DOCUMENT CLASS -- version 2.22 (05-Sep-2022)
 % Springer Verlag LaTeX2e support for Lecture Notes in Computer Science
 %
 %%
@@ -19,7 +19,7 @@
 %%   Right brace   \}     Tilde         \~}
 %%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{llncs}[2022/01/12 v2.21
+\ProvidesClass{llncs}[2022/09/05 v2.22
 ^^J LaTeX document class for Lecture Notes in Computer Science]
 % Options
 \let\if@envcntreset\iffalse
@@ -77,40 +77,40 @@
   \fi}
 %
 \def\switcht@albion{%
-\def\abstractname{Abstract.}
-\def\ackname{Acknowledgement.}
-\def\andname{and}
-\def\lastandname{\unskip, and}
+\def\abstractname{Zusammenfassung.}
+\def\ackname{Danksagung.}
+\def\andname{und}
+\def\lastandname{\unskip\ und}
 \def\appendixname{Appendix}
-\def\chaptername{Chapter}
-\def\claimname{Claim}
-\def\conjecturename{Conjecture}
-\def\contentsname{Table of Contents}
-\def\corollaryname{Corollary}
+\def\chaptername{Kapitel}
+\def\claimname{Behauptung}
+\def\conjecturename{Vermutung}
+\def\contentsname{Inhaltsverzeichnis}
+\def\corollaryname{Korollar}
 \def\definitionname{Definition}
-\def\examplename{Example}
-\def\exercisename{Exercise}
-\def\figurename{Fig.}
-\def\keywordname{{\bf Keywords:}}
+\def\examplename{Beispiel}
+\def\exercisename{Übung}
+\def\figurename{Abb.}
+\def\keywordname{{\bf Schlagwörter:}}
 \def\indexname{Index}
 \def\lemmaname{Lemma}
-\def\contriblistname{List of Contributors}
-\def\listfigurename{List of Figures}
-\def\listtablename{List of Tables}
+\def\contriblistname{Mitwirkende}
+\def\listfigurename{Abbildungsverzeichnis}
+\def\listtablename{Tabellenverzeichnis}
 \def\mailname{{\it Correspondence to\/}:}
 \def\noteaddname{Note added in proof}
-\def\notename{Note}
+\def\notename{Notiz}
 \def\partname{Part}
 \def\problemname{Problem}
-\def\proofname{Proof}
-\def\propertyname{Property}
-\def\propositionname{Proposition}
-\def\questionname{Question}
-\def\remarkname{Remark}
-\def\seename{see}
-\def\solutionname{Solution}
+\def\proofname{Beweis}
+\def\propertyname{Eigenschaft}
+\def\propositionname{Vorschlag}
+\def\questionname{Frage}
+\def\remarkname{Anmerkung}
+\def\seename{siehe}
+\def\solutionname{Lösung}
 \def\subclassname{{\it Subject Classifications\/}:}
-\def\tablename{Table}
+\def\tablename{Tabelle}
 \def\theoremname{Theorem}}
 \switcht@albion
 % Names of theorem like environments are already defined
@@ -374,7 +374,7 @@ You should not use \verb|\subparagraph| with this class.\vskip0.5cm}
 \let\footnotesize\small
 
 \if@custvec
-\def\vec#1{\mathchoice{\mbox{\boldmath$\displaystyle#1$}}
+\DeclareRobustCommand\vec[1]{\mathchoice{\mbox{\boldmath$\displaystyle#1$}}
 {\mbox{\boldmath$\textstyle#1$}}
 {\mbox{\boldmath$\scriptstyle#1$}}
 {\mbox{\boldmath$\scriptscriptstyle#1$}}}
