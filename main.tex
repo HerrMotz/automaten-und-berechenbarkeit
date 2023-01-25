@@ -33,13 +33,17 @@
 \begin{document}
 %
 \title{
-    Automaten und Berechenbarkeit
+    Automaten und Berechenbarkeit \\
+    Dr. Jörg Vogel \\
+    Skript zur VL im WS 2021
 }
 %
-\titlerunning{A\&B}%
+\titlerunning{
+    Automaten \& Berechenbarkeit
+}%
 \author{Maximilian Stock, Daniel Motz}
 %
-\authorrunning{M. Stock, D. Motz}
+\authorrunning{J. Vogel, M. Stock, D. Motz}
 %
 \institute{Fakultät für Mathematik und Informatik, Friedrich-Schiller-University,\\ Jena, Germany\\
 \vspace{.2cm}
@@ -58,7 +62,7 @@ Die Darstellung von Daten -- als Eingabe für Algorithmen -- wird realisiert als
 \begin{example}
     Darstellung von Graphen
 
-    \begin{minipage}{0.5\linewidth}
+    \begin{minipage}{.5\textwidth}
         \begin{tikzpicture}[domain=0:4]
             \draw[thick,sharp corners=0pt]
             (0,0) node[anchor=north east]{$v_4$} --
@@ -71,9 +75,8 @@ Die Darstellung von Daten -- als Eingabe für Algorithmen -- wird realisiert als
             (0,0) -- 
             (2,0);
         \end{tikzpicture}
-    \end{minipage}
-    
-    \begin{minipage}{0.5\linewidth}
+    \end{minipage} %
+    \begin{minipage}{.5\textwidth}
         $\begin{matrix}
             & v_1 & v_2 & v_3 & v_4 & v_5 \\
         v_1 & 0 & 1 & 1 & 0 & 0 \\
@@ -82,7 +85,74 @@ Die Darstellung von Daten -- als Eingabe für Algorithmen -- wird realisiert als
         v_4 & 0 & 1 & 1 & 0 & 1 \\
         v_5 & 0 & 1 & 1 & 1 & 0
         \end{matrix}$
-    \end{minipage}
+    \end{minipage}%
+    \newline%
+    \newline%
+    Codewort: $\#0100\#10111\#11011\#01101\#01110\#$
+    $\rightarrow$ Buchstaben aus $\{0, 1, \#\}$
 \end{example}
+
+\begin{definition}
+    Ein Alphabet $\Sigma$ ist eine endliche nicht leere Menge.
+\end{definition}
+
+\begin{example}
+    \begin{align}
+        \Sigma_{\text{graph}} &= \{ 0, 1, \# \} \\
+        \Sigma_{\text{latein}} &= \{ a, b, c, \dots, x, y, z \} \\
+        \Sigma_{\text{griech}} &= \{ \alpha, \beta, \gamma, \dots, \omega \} \\
+        \Sigma_{\text{boole}} &= \{0, 1\} = \Sigma_{bin} \\
+        \Sigma_{\text{dezi}} &= \{0, 1, \dots, 9\} \\
+        \Sigma_{\text{unär}} &= \{1\} \\
+        \Sigma_{\text{Tastatur}} &= \{a, b, c, \dots, z\} \cup \{A, B, C, \dots, Z\} \cup \{\text{ä}, \text{Ä}, \dots\} \\
+        &\phantom{==} \cup \{0, \dots, 9\} \cup \{!, \backslash, \#, ;, -, ~, \dots\} \cup \{\text{␣}\}
+    \end{align}
+    $\hookrightarrow \emptyset, \mathbb{N}$ sind keine Alphabete
+\end{example}
+
+\begin{definition}
+    Es sei $\Sigma = \{a_1, a_2, \dots, a_m\}$ ein Alphabet mit $m$ Buchstaben. Ein Wort $w$ ist eine endliche Folge von Buchstaben aus $\Sigma$, etwa:
+    \[ w = a_{i1} \; a_{i2} \; \dots \; a_{in}, \quad a_{ij} \in \Sigma \]
+    Die Länge dieses Wortes ist $n$ -- die Anzahl seiner Buchstaben. \\
+    \\ 
+    Schreibweise: $|w| = n$. \\
+    Sonderfall: Das leere Wort $\lambda$ hat die Länge 0. \\
+    $\Sigma^*$ bezeichnet die Menge aller (endlichen) Wörter über $\Sigma$.
+
+    \begin{align}
+        \Sigma^0 &:= \{\lambda\} \\
+        \Sigma^{n+1} &:= \Sigma^n \cdot \Sigma := \{wa\;|\;w \in \Sigma^n,\;a \in \Sigma\} \\
+        \Sigma^* &:= \bigcup_{n\in \mathbb{N}} \Sigma^n
+    \end{align}
+\end{definition}
+
+Für die Länge gilt: $|\lambda| = 0 \quad , \quad |wa| = |w| + 1$
+\[ w \in \Sigma^n \leftrightarrow |w| = n \]
+
+\begin{remark}
+    Was sind Wörter über $\Sigma_{\text{Tastatur}}$?
+    \begin{itemize}
+        \renewcommand{\labelitemi}{$\rightarrow$}
+        \item Wörter der natürlichen Sprache
+        \item Zahlen
+        \item Sätze, Texte, Romane, \dots 
+        \item Graphen
+    \end{itemize}
+    $\hookrightarrow$ Der Begriff Wort ist in der Informatik ein anderer als in der Umgangssprache. Alle Informationen, alle Daten, ... sind Wörter.
+\end{remark}
+
+\pagebreak
+
+\subsubsection{Operationen für Wörter}
+\paragraph{Konkatenation / Hintereinanderschreiben}\phantom{ }\\
+Für zwei Wörter
+    \begin{align*}
+        u &= x_1\, x_2\, \dots\, x_n \\
+        v &= y_1\, y_2\, \dots\, y_k
+    \end{align*}
+    mit $x_i, y_j \in \Sigma = \{ a_1, a_2, \dots, a_m \}$ ist
+    \[ u \circ v := x_1\, x_2\, \dots\, x_n\  y_1\, y_2\, \dots\, y_k \]
+    die Konkatenation von $u$ und $v$.\\
+    Das ist damit eine zweistellige assoziative Operation: $(u\circ v)\circ w = u \circ (v\circ w)$ mit der Eigenschaft $u\circ \lambda = u = \lambda \circ u$. Das heißt $\lambda$ ist das neutrale Element.
 
 \end{document}
