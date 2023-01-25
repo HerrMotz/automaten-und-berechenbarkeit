@@ -10,16 +10,14 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: main.tex
-      - name: Upload PDF file
-        uses: actions/upload-artifact@v3
-        with:
-          name: PDF
-          path: main.pdf
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Rename file
+        run: |
+          mv main.pdf automaten-und-berechenbarkeit.pdf
+      - name: Create release with current PDF file
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
-          prerelease: true
           title: "Aktuelles Skript"
           files: |
-            main.pdf
+            automaten-und-berechenbarkeit.pdf
