@@ -77,40 +77,40 @@
   \fi}
 %
 \def\switcht@albion{%
-\def\abstractname{Zusammenfassung.}
-\def\ackname{Danksagung.}
-\def\andname{und}
-\def\lastandname{\unskip\ und}
+\def\abstractname{Abstract.}
+\def\ackname{Acknowledgement.}
+\def\andname{and}
+\def\lastandname{\unskip, and}
 \def\appendixname{Appendix}
-\def\chaptername{Kapitel}
-\def\claimname{Behauptung}
-\def\conjecturename{Vermutung}
-\def\contentsname{Inhaltsverzeichnis}
-\def\corollaryname{Korollar}
+\def\chaptername{Chapter}
+\def\claimname{Claim}
+\def\conjecturename{Conjecture}
+\def\contentsname{Table of Contents}
+\def\corollaryname{Corollary}
 \def\definitionname{Definition}
-\def\examplename{Beispiel}
-\def\exercisename{Übung}
-\def\figurename{Abb.}
-\def\keywordname{{\bf Schlagwörter:}}
+\def\examplename{Example}
+\def\exercisename{Exercise}
+\def\figurename{Fig.}
+\def\keywordname{{\bf Keywords:}}
 \def\indexname{Index}
 \def\lemmaname{Lemma}
-\def\contriblistname{Mitwirkende}
-\def\listfigurename{Abbildungsverzeichnis}
-\def\listtablename{Tabellenverzeichnis}
+\def\contriblistname{List of Contributors}
+\def\listfigurename{List of Figures}
+\def\listtablename{List of Tables}
 \def\mailname{{\it Correspondence to\/}:}
 \def\noteaddname{Note added in proof}
-\def\notename{Notiz}
+\def\notename{Note}
 \def\partname{Part}
 \def\problemname{Problem}
-\def\proofname{Beweis}
-\def\propertyname{Eigenschaft}
-\def\propositionname{Vorschlag}
-\def\questionname{Frage}
-\def\remarkname{Anmerkung}
-\def\seename{siehe}
-\def\solutionname{Lösung}
+\def\proofname{Proof}
+\def\propertyname{Property}
+\def\propositionname{Proposition}
+\def\questionname{Question}
+\def\remarkname{Remark}
+\def\seename{see}
+\def\solutionname{Solution}
 \def\subclassname{{\it Subject Classifications\/}:}
-\def\tablename{Tabelle}
+\def\tablename{Table}
 \def\theoremname{Theorem}}
 \switcht@albion
 % Names of theorem like environments are already defined
@@ -179,7 +179,7 @@
  \def\listtablename{Tabellenverzeichnis}%
  \def\mailname{{\it Correspondence to\/}:}%
  \def\noteaddname{Nachtrag}%
- \def\notename{Anmerkung}%
+ \def\notename{Schreibweise}%
  \def\partname{Teil}%
 %\def\problemname{Problem}%
  \def\proofname{Beweis}%
@@ -1144,7 +1144,8 @@ to0pt{\kern0.55\wd0\vrule height0.45\ht0\hss}\box0}}}}
 \spn@wtheorem{case}{Case}{\itshape}{\rmfamily}
 \spn@wtheorem{conjecture}{Conjecture}{\itshape}{\rmfamily}
 \spn@wtheorem{corollary}{Corollary}{\bfseries}{\itshape}
-\spn@wtheorem{definition}{Definition}{\bfseries}{\itshape}
+%\spn@wtheorem{definition}{Definition}{\bfseries}{\itshape}
+\spn@wtheorem{definition}{Definition}{\bfseries}{}
 \spn@wtheorem{example}{Example}{\itshape}{\rmfamily}
 \spn@wtheorem{exercise}{Exercise}{\itshape}{\rmfamily}
 \spn@wtheorem{lemma}{Lemma}{\bfseries}{\itshape}
