@@ -1143,7 +1143,8 @@ to0pt{\kern0.55\wd0\vrule height0.45\ht0\hss}\box0}}}}
 \fi
 \spn@wtheorem{case}{Case}{\itshape}{\rmfamily}
 \spn@wtheorem{conjecture}{Conjecture}{\itshape}{\rmfamily}
-\spn@wtheorem{corollary}{Corollary}{\bfseries}{\itshape}
+%\spn@wtheorem{corollary}{Corollary}{\bfseries}{\itshape}
+\spn@wtheorem{corollary}{Corollary}{\bfseries}{}
 %\spn@wtheorem{definition}{Definition}{\bfseries}{\itshape}
 \spn@wtheorem{definition}{Definition}{\bfseries}{}
 \spn@wtheorem{example}{Example}{\itshape}{\rmfamily}
