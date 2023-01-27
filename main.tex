@@ -1,4 +1,4 @@
-\documentclass[runningheads]{llncs}
+\documentclass[runningheads,deutsch]{llncs}
 %
 \usepackage[T1]{fontenc}
 %
@@ -128,9 +128,10 @@ Die Darstellung von Daten -- als Eingabe für Algorithmen -- wird realisiert als
 \begin{definition}
     Es sei $\Sigma = \{a_1, a_2, \dots, a_m\}$ ein Alphabet mit $m$ Buchstaben. Ein Wort $w$ ist eine endliche Folge von Buchstaben aus $\Sigma$, etwa:
     \[ w = a_{i1} \; a_{i2} \; \dots \; a_{in}, \quad a_{ij} \in \Sigma \]
-    Die Länge dieses Wortes ist $n$ -- die Anzahl seiner Buchstaben. \\
-    \\ 
-    Schreibweise: $|w| = n$. \\
+    Die Länge dieses Wortes ist $n$ -- die Anzahl seiner Buchstaben.
+    \begin{note}
+        $|w| = n$
+    \end{note}
     Sonderfall: Das leere Wort $\lambda$ hat die Länge 0. \\
     $\Sigma^*$ bezeichnet die Menge aller (endlichen) Wörter über $\Sigma$.
 
@@ -160,7 +161,7 @@ Für die Länge gilt: $|\lambda| = 0 \quad , \quad |wa| = |w| + 1$
 
 \subsubsection{Operationen für Wörter}
 \paragraph{Konkatenation / Hintereinanderschreiben}\phantom{ }\\
-Für zwei Wörter
+    Für zwei Wörter
     \begin{align*}
         u &= x_1\, x_2\, \dots\, x_n \\
         v &= y_1\, y_2\, \dots\, y_k
@@ -168,6 +169,56 @@ Für zwei Wörter
     mit $x_i, y_j \in \Sigma = \{ a_1, a_2, \dots, a_m \}$ ist
     \[ u \circ v := x_1\, x_2\, \dots\, x_n\  y_1\, y_2\, \dots\, y_k \]
     die Konkatenation von $u$ und $v$.\\
-    Das ist damit eine zweistellige assoziative Operation: $(u\circ v)\circ w = u \circ (v\circ w)$ mit der Eigenschaft $u\circ \lambda = u = \lambda \circ u$. Das heißt $\lambda$ ist das neutrale Element.
+    
+    Es ist damit eine zweistellige assoziative Operation: $(u\circ v)\circ w = u \circ (v\circ w)$ mit der Eigenschaft $u\circ \lambda = u = \lambda \circ u$. Das heißt $\lambda$ ist das neutrale Element.
+
+    Die Struktur $(\Sigma^*, \circ, \lambda)$ ist ein Monoid und heißt \textit{freie Worthalbgruppe} über $\Sigma$. (Auch $(\mathbb{N}, \circ, \lambda)$ ist ein Monoid.)
+
+    % TODO wieso heißt die Abbildung |\cdot|?
+    Die Abbildung $|\cdot|: \Sigma^* \mapsto \mathbb{N}$, die jedem Wort seine Länge zuordnet, ist ein Homomorphismus von $\Sigma^*$ auf $\mathbb{N}$, denn es gilt: $|u \circ v| = |u| + |v|$.
+
+\begin{note}
+    $w = u\circ v$ immer, wenn "algebraisch". \\
+    aber praktisch: ohne $\circ$, sondern $w = uv$.
+\end{note}
+
+\subsubsection{Potenzen von Wörtern}
+Es sei $w = x_1\, x_2 \, \dots \, x_n \in \Sigma^*$ ein (beliebiges) Wort der Länge $n$. Wir definieren (rekursiv):
+
+\begin{align}
+    w^0 &:= \lambda \\
+    w^1 &:= w \\
+    w^k+1 &:= w^k \circ w
+\end{align}
+
+Die \textit{k-te Potenz} eines Wortes $w$ ist das Wort $w$ k-mal konkateniert.
+
+\begin{example}
+    $w = baa\, baa\, abab$ über $\Sigma = \{a, b\}$
+    \begin{align*}
+        w &= (baa)^2 \, (ab)^2 \\
+        &= b^1\, a^2 \, b^1\, a^3\, b^1\, a^1\, b^1
+    \end{align*}
+\end{example}
+
+Damit haben wir folgende Schreibweise: für $\Sigma = \{a\}$:
+\[ \Sigma^* = \{\lambda, a, a^2, a^3, ..., a^n, \dots \} \]
+
+\subsubsection{Spiegelwort}
+
+Für ein Wort $w = x_1\, x_2\, x_3\, \dots \, x_{n-1}\, x_n \quad (x_i \in \Sigma)$ ist das Spiegelwort
+\[ \text{Sp}(w) := x_n\, x_{n-1}\, \dots \, x_3\, x_2\, x_1 := w^R \]
+Sp ist eine einstellige Operation, für die gilt:
+\begin{align}
+    \text{Sp}(\lambda) &= \lambda \\
+    \text{Sp}(a) &= a \quad (a \in \Sigma) \\
+    \text{Sp}(wa) &= a Sp(w) \quad (a \in \Sigma, w \in \Sigma^*)
+\end{align}
+
+\subsection{Relationen für Wörter}
+
+\begin{definition}
+    Es seien $u, w \in \Sigma^*$. $u$ ist ein Teilwort von $w \xleftrightarrow[\text{def.}]{}$ es gibt zwei Wörter $l, r \in \Sigma^*$, sodass $w=lur$.
+\end{definition}
 
 \end{document}
