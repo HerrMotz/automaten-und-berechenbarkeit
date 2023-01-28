@@ -26,9 +26,9 @@
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \usepackage{tikz}
-\usepackage{tikz-3dplot}
 \usepackage{pgfplots}
 \pgfplotsset{compat = newest}
+\usetikzlibrary{arrows, automata, positioning}
 
 \usepackage{hyperref}
 
@@ -220,5 +220,151 @@ Sp ist eine einstellige Operation, für die gilt:
 \begin{definition}
     Es seien $u, w \in \Sigma^*$. $u$ ist ein Teilwort von $w \xleftrightarrow[\text{def.}]{}$ es gibt zwei Wörter $l, r \in \Sigma^*$, sodass $w=lur$.
 \end{definition}
+
+
+\begin{note}
+    $u$ ist Teilwort von $w$: $u \sqsubseteq w$
+\end{note}
+
+\begin{example}
+    $\Sigma := \{a, b\}, \quad w = ab\, ab\, ab\, ba\, bb, \quad |w| = 10$
+
+    Alle Teilwörter der Länge 4: $abab, baba, \textcolor{gray}{abab}, babb, abba, bbab, \textcolor{gray}{babb}$
+\end{example}
+
+\begin{remark}
+    $l = \lambda$ oder $r = \lambda$ ist zugelassen. Falls $l = \lambda$, dann gilt: $w = ur$. In diesem Fall heißt $u$ \textit{Präfix (Anfangswert)} von $w$.
+
+    Falls $r = \lambda$, dann gilt: $w = lu$. In diesem Fall heißt $u$ \textit{Suffix (Endwert)} von $w$.
+\end{remark}
+
+\begin{remark}
+    Jedes Teilwort ist eine zusammenhängende Folge von Buchstaben von $w$
+\end{remark}
+
+\begin{property}
+    Eigenschaften von $\sqsubseteq$
+
+    Es gilt: $\sqsubseteq\, \subseteq \Sigma^* \times \Sigma^*$ mit
+    \begin{itemize}
+        \item Reflexivität
+        \item Transitivität
+        \item Antisymmetrie
+    \end{itemize}
+    Damit ist $\sqsubseteq$ eine Halbordnungsrelation über $\Sigma^*$, wobei $\lambda \sqsubseteq w$ für alle $w \in \Sigma^*$.
+    Damit ist $(\Sigma^*, \sqsubseteq, \lambda)$ eine halbgeordnete Menge mit dem Minimum $\lambda$.
+    \color{gray} Wir wissen $(\mathbb{N}, \leq, 0)$ ist eine halbgeordnete Menge mit dem Minimum 0.
+    Analogie: $(\Sigma^*, \circ, \lambda)$ und $(\mathbb{N}, + 0)$ sind Monoide mit dem Homomorphismus $u \circ v = |u| + |v|$ von $\Sigma^*$ auf $\mathbb{N}$.
+    \color{black}
+\end{property}
+
+\subsubsection{Binäre Nummern und Binärdarstellung}
+Es ist $\Sigma_{\text{bin}} = \{0, 1\}$. Weiter sei $w = x_1\, x_2\, \dots\, x_n \in \Sigma^*_{\text{bin}}$ für $n > 0$. \textcolor{gray}{$w \neq \lambda$}
+
+Die \textit{binäre Nummer} von $w$ ist definiert als
+
+\[ \text{Nr}_\text{bin}(w) := \Sigma^n_{i=1} x_i \cdot 2^{n-1} \]
+
+Die \textit{Binärdarstellung} von $n$ ist das kürzeste Wort $w \in \{0, 1\}^*$ mit $\text{Nr}_\text{bin}(w) = n$.
+
+\begin{example}
+    Es sei $w = 00\, 11\, 01\, 10$ mit $|w| = 8$. Also ist 
+    \begin{align*}
+        \text{Nr}_\text{bin}(w) &= \Sigma^8_{i=1} x_i \cdot 2^{8-i} \\
+        &= 0 \cdot 2^7 + 0 \cdot 2^6 + 1 \cdot 2^5 + 1 \cdot 2^4 + 0 \cdot 2^3 + 1 \cdot 2^2 + 1 \cdot 2^1 + 0 \cdot 2^0
+        &= 54
+    \end{align*}
+
+    Andererseits ist $\text{bin}(54) = 11\, 01\, 10$
+\end{example}
+
+Wir wissen: Binärdarstellungen sind solche Wörter $w\in \{ 0,1 \}^* \backslash \{\lambda\}$, die mit $1$ beginnen oder $w=0$. Für jede natürliche Zahl $n$ gibt es unendliche viele Wörter $w$ mit $\text{Nr}_{\text{bin}}(w) = n$. Das ist das "Gegenteil" von eineindeutiger Zuordnung!
+
+\subsubsection{Kanonische Ordnung und dyadische Darstellung}
+
+Es sei $\Sigma = \{ a_1, a_2, \dots, a_m \}$ ein beliebiges Alphabet mit der natürlichen Ordnung $a_1 < a_2 < \dots < a_m$. Zum Beispiel $\Sigma_{\text{latein}} = \{a < b < c \dots < x < y < z\}$ und $\Sigma_{\text{dezi}} = \{0 < 1 < 2 \dots < 9\}$
+
+Frage: Warum lässt sich die übliche natürliche Ordnung (wie im Duden) nicht für $\Sigma^*$ nicht benutzen?
+
+$\rotatebox[origin=c]{180}{$\Lsh$}$ Im Duden stehen endlich viele Wörter, $\Sigma^*$ umfasst unendlich viele Wörter! Zählt man die Wörter aus $\Sigma^*$ in der natürlichen Ordnung auf, ergibt sich $a_1, a_1, a_1, a_1, a_1, a_1, \dots \rightarrow$ auf diese Weise wird $a_2$ gar nicht erreicht!
+
+\begin{definition}
+    Es seien $u, v \in \Sigma^*$. Die kanonische Ordnung (quasilexikographische Ordnung) (Schreibweise: $u < v$) ist definiert durch
+    \begin{enumerate}
+        \item $|u| < |v|$
+        \item Wenn $|u| = |v|$ und es gibt einen Präfix $p$, sodass gilt: $u = p\, a_i\, u_R$ und $v = p\, a_j\, v_R$ und $a_i < a_j$ in der natürlichen kananonischen Ordnung??
+        % TODO herausfinden was nicht mehr auf dem Scan zu sehen ist.
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    $\Sigma_{\text{bin}} = \{0,1\}$ mit $0 < 1$.
+
+    $\Sigma^*_{\text{bin}} = \{ \lambda, 0, 1, 00, 01, 10, 11, 000, 001, \dots \}$ ist die kanonische Ordnung für $\{0, 1\}^*$.
+\end{example}
+
+Wir betrachten jetzt das Alphabet $\Sigma^*_{\text{dya}} = \{1, 2\}$ mit $1 < 2$.
+Die kanonische Ordnung für $\{1, 2\}^*$ ist 
+
+\[ \Sigma^*_{dya} = \{ \lambda,1, 2, 11, 12, 21, 22, 111, 112, \dots \} \]
+
+mit den Platznummern $0, 1, 2, 3, 4, 5, 6, 7, 8, \dots$
+
+für die gilt: $1\cdot 2^0,\ 2\cdot 2^0,\ 1\cdot 2^1 + 1\cdot 2^0,\ 1\cdot 2^1 + 2\cdot 2^0, \dots$
+
+Für $\Sigma_{dya}$ und ein $w\in \Sigma_{dya}^* = \{1, 2\}^*$ mit $w = x_1\, x_2\, \dots, x_n (w \neq \lambda)$
+definieren wir
+
+\[ \text{Platznummer}(w) = \sum^n_{i=1} x_i \cdot 2^{n-i}, \quad \text{für}\, x_i \in \{1, 2\} \]
+
+\textit{Fakt}: Jede positive natürliche Zahl $k$ besitzt eine eindeutige Darstellung der Form
+\[ (\star)\quad k = \sum^n_{i=1} x_i \cdot 2^{n-i}, \quad \text{für}\, x_i \in \{1,2\} \]
+
+Für eine positive natürliche Zahl mit $(\star)$ ist
+\[ k = (x_1\, x_2\, \dots\, x_n)_2\]
+
+\textit{die dyadische Darstellung von} $k$.
+
+Wir setzen für $k=0$: $0=(\lambda)_2$. Damit haben wir:
+
+\begin{align}
+    \textit{Platznummer:}\; & \{1, 2\}^* \mapsto \mathbb{N}\; \text{und} \\
+    \textit{dyadische Darstellung dya:}\; & \mathbb{N} \mapsto \{1, 2\}^*
+\end{align}
+
+wobei \textit{dya} die Umkehrabbildung von Platznummer ist. Damit ist \textit{dya} eine Bijektion zwischen $\mathbb{N}$ und $\{1,2\}^*$.
+
+% TODO ergänzen
+
+\section{Endliche Automaten}
+
+\begin{example} (wenn auch ein nicht-formales): Ein Aufzug mit zwei Stockwerken
+    \textbf{Mögliche Eingaben}
+    \begin{itemize}
+        \item im Aufzug möchte jemand nach oben
+        \item oben wartet jemandim Aufzug möchte jemand nacht unten
+        \item unten wartet jemand
+    \end{itemize}
+
+    Wir unterscheiden zwei Zustände:
+    \begin{align*}
+        \rightarrow & \text{"oben": der Aufzug ist oben} \\
+        & \text{"unten": der Aufzug ist unten}
+    \end{align*}
+
+    \begin{center}        
+        \begin{tikzpicture}[
+            ->,
+            >=stealth,
+            semithick,
+            node distance=2cm]
+            \node [state,initial] (a) {oben};
+            \node [state] (b) [below of = a] {unten};
+
+        \end{tikzpicture}
+    \end{center}
+
+\end{example}
+
 
 \end{document}
