@@ -486,4 +486,32 @@ wobei \textit{dya} die Umkehrabbildung von Platznummer ist. Damit ist \textit{dy
     $K'$ heißt \textit{unmittelbare Nachfolgekonfiguration} von $k$. Der Übergang von $K$ zu $K'$ entspricht einem Berechnungsschritt von $A$ mit $w$ und erfolgt gemäß $\delta$. $\vdash$ heißt \textit{Übergangsrelation}.
 \end{definition}
 
+$5$-Tupel endlicher Mengen $A = (Q, \Sigma, \delta, q_0, F)$ ... \textit{ein Beispiel einer "mathematischen Maschine"} -- mit $\delta$ also "Programm", wobei $\delta$ total definiert: 
+
+\[ \delta: Q\times \Sigma \mapsto Q \]
+
+\textit{Konfiguration}
+\[ K = (p,u) \in Q\times \Sigma^* \]
+
+\textit{Übergangsrelation}
+\[ (p,u) \vdash (q,v) \text{ taktet den Automaten} \]
+
+Ein \textit{Takt} der Berechnung von $A$ bei Eingabe $w$ ist ein Element $((p,u), (q,v)) \in \vdash$. $(q, v)$ heißt in diesem Fall \textit{unmittelbare Nachfolgekonfiguration} von $(p,u)$.
+\\
+\\
+\textit{Besondere Konfigurationen} \begin{itemize}%[leftmargin=1em]
+    \renewcommand{\labelitemi}{$\rightarrow$}
+   \item Start-Konfiguration $\text{Start-K}_A (w) := (q_0, w)$
+   \item annehmende Konfiguration $\text{K}_A (w) := (q_0, \lambda) \text{ mit } q\in F$
+   \item ablehnende Konfiguration $\text{K}_A (w) := (q_0, \lambda) \text{ mit } q\notin F$
+\end{itemize}
+Wir betrachten $\vdash^*$, die reflexive und transitive Hülle von $\vdash$.
+\textit{Frage: } Wann gilt $K \vdash^* K'$? (in diesem Fall heißt $K'$ \textit{Nachfolgekonfiguration} von $K$)
+\textit{Antwort:} $K \vdash^* K' \leftrightarrow \text{ es gibt eine Folge von Konfigurationen } K_0, K_1, K_2, \dots, K_t$ mit
+\begin{itemize}
+    \item $K_0 = K$
+    \item $K_{i-1} \vdash K_i$ für $i=1, \dots, t$
+    \item $K_t = K'$ (dabei ist $t$ die Taktzahl)
+\end{itemize}
+
 \end{document}
