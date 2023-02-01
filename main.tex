@@ -208,11 +208,11 @@ Damit haben wir folgende Schreibweise: für $\Sigma = \{a\}$:
 
 Für ein Wort $w = x_1\, x_2\, x_3\, \dots \, x_{n-1}\, x_n \quad (x_i \in \Sigma)$ ist das Spiegelwort
 \[ \text{Sp}(w) := x_n\, x_{n-1}\, \dots \, x_3\, x_2\, x_1 := w^R \]
-Sp ist eine einstellige Operation, für die gilt:
+\text{Sp} ist eine einstellige Operation, für die gilt:
 \begin{align}
     \text{Sp}(\lambda) &= \lambda \\
     \text{Sp}(a) &= a \quad (a \in \Sigma) \\
-    \text{Sp}(wa) &= a Sp(w) \quad (a \in \Sigma, w \in \Sigma^*)
+    \text{Sp}(wa) &= a \text{Sp}(w) \quad (a \in \Sigma, w \in \Sigma^*)
 \end{align}
 
 \subsection{Relationen für Wörter}
@@ -340,11 +340,12 @@ wobei \textit{dya} die Umkehrabbildung von Platznummer ist. Damit ist \textit{dy
 
 \begin{example} (wenn auch ein nicht-formales): Ein Aufzug mit zwei Stockwerken
     \textbf{Mögliche Eingaben}
-    \begin{itemize}
+    \begin{enumerate}
         \item im Aufzug möchte jemand nach oben
-        \item oben wartet jemandim Aufzug möchte jemand nacht unten
+        \item oben wartet jemand 
+        \item im Aufzug möchte jemand nach unten
         \item unten wartet jemand
-    \end{itemize}
+    \end{enumerate}
 
     Wir unterscheiden zwei Zustände:
     \begin{align*}
@@ -361,10 +362,128 @@ wobei \textit{dya} die Umkehrabbildung von Platznummer ist. Damit ist \textit{dy
             \node [state,initial] (a) {oben};
             \node [state] (b) [below of = a] {unten};
 
+            \path (a) edge [bend right,left] node {$3. \lor 4.$} (b)
+                      edge [loop above,above] node {$\lnot 3. \land \lnot 4.$} (a)
+                  (b) edge [bend right,right] node {$1. \lor 2.$} (a)
+                      edge [loop below,below] node {$\lnot 1. \land \lnot 2.$} (b);
+            
         \end{tikzpicture}
     \end{center}
-
 \end{example}
 
+\begin{definition}
+    Ein (deterministischer) endlicher Automat $A$ ist ein $5$-Tupel $A = (Q, \Sigma, \delta, q_0, F)$, wobei:
+    \begin{enumerate}
+        \item $Q$ ist eine endliche nicht-leere Menge: \textit{Zustandsmenge}
+        \item $\Sigma$ ist eine endliche nicht-leere Menge: \textit{Eingabealphabet}
+        \item $\delta$ ist eine Funktion $\delta: Q \times \Sigma \mapsto Q$ \textcolor{gray}{mit $Q\cap \Sigma = \emptyset$} und heißt \textit{Übergangsfunktion} \textcolor{gray}{(Programm)}
+        \item $q_0 \in Q$ ist der \textit{Startzustand} von $A$
+        \item $F \subseteq Q$ ist die Menge der \textit{Finalzustände} von $A$
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    Wir wählen $\Sigma = \{0, 1\}.$ Wir legen fest: $w := 0110 \in \Sigma^*$. Wir konstruieren einen endlichen Automaten $A_1$, der dieses $w$ "erkennt". Dies stellen wir als Graphen dar, wobei die Knoten \textit{Zuständen} und die Kanten \text{Übergängen gemäß $\delta$}.
+    \\
+    \\
+    \begin{tikzpicture}[
+        ->,
+        >=stealth,
+        semithick,
+        node distance=2cm]
+    
+        \node [initial,state]    (0) {$q_0$};
+        \node [state]            (1) [right of=0] {$q_1$};
+        \node [state]            (2) [right of=1] {$q_2$};
+        \node [state]            (3) [right of=2] {$q_3$};
+        \node [state,accepting]  (4) [right of=3] {$q_4$};
+        \node [state]            (5) [below of=2] {$q_5$};
+        
+        \path (0) edge [below] node {0}   (1)
+                    edge [below] node {1}   (5)
+                (1) edge [below] node {1}   (2)
+                    edge [below] node {0}   (5)
+                (2) edge [below] node {1}   (3)
+                    edge [right] node {0}   (5)
+                (3) edge [below] node {0}   (4)
+                    edge [below] node {1}   (5)
+                (4) edge [below] node {0,1} (5)
+                (5) edge [loop below,below] node {0,1} (5);
+    \end{tikzpicture}
+
+    Dabei ist also:
+    \begin{align*}
+        Q &= \{q_0, q_1, q_2, q_3, q_4, q_5\} \\
+        \Sigma &= \{0, 1\} \\
+        \delta &\quad \text{gemäß des Graphen} \\
+        q_0, &\quad F= \{q_4\}
+    \end{align*}
+
+    \begin{itemize}
+        \item Die Überführungsfunktion $\delta$ ist total definiert.
+        \item Der Automat akzeptiert ein Eingabewort $w \leftrightarrow \text{ ein Finalzustand erreicht wird}$.
+        \item Unser Beispiel: die einzige Eingabe, die $A_1$ akzeptiert, ist $w = 0110$.
+        \item Die von $A_1$ akzeptierte Sprache ist $L(A_1) = \{0110\}$.
+    \end{itemize}
+\end{example}
+
+\begin{example}
+    Dasselbe Alphabet $\Sigma = \{0,1\}$. Wir konstruieren einen endlichen Automaten $A_2$, der unendlich viele Wörter der Form $w = 0110\, u$ für $u \in \{0,1\}^*$ erkennt, also alle Wörter über $\{0,1\}$, für die $0110$ ein Präfix ist. $A_2$ ist eine \textit{Modifikation} von $A_1$ mit $L(A_2) = \{0110\,u | u\in \{0,1\}^*\}$\\
+    \\
+
+    \begin{tikzpicture}[
+        ->,
+        >=stealth,
+        semithick,
+        node distance=2cm]
+    
+        \node [initial,state]    (0) {$q_0$};
+        \node [state]            (1) [right of=0] {$q_1$};
+        \node [state]            (2) [right of=1] {$q_2$};
+        \node [state]            (3) [right of=2] {$q_3$};
+        \node [state,accepting]  (4) [right of=3] {$q_4$};
+        \node [state]            (5) [below of=2] {$q_5$};
+        
+        \path (0) edge [below] node {0}   (1)
+                    edge [below] node {1}   (5)
+                (1) edge [below] node {1}   (2)
+                    edge [below] node {0}   (5)
+                (2) edge [below] node {1}   (3)
+                    edge [right] node {0}   (5)
+                (3) edge [below] node {0}   (4)
+                    edge [below] node {1}   (5)
+                (4) edge [loop right, right] node {0,1} (4)
+                (5) edge [loop below,below] node {0,1} (5);
+    \end{tikzpicture}
+\end{example}
+
+\textit{Frage:} Wieso können $5$-Tupel eigentlich "rechnen"? $\rightarrow$ Dazu geben wir eine formale Definition der \textit{Berechnung} eines Automaten $A$ bei Eingabe $w$.
+
+\begin{definition}
+    Gegeben sei ein (deterministischer) endlicher Automat $A = (Q, \Sigma, \delta, q_0, F)$ und eine Eingabe $w\in \Sigma^*$. Eine \textit{Konfiguration $K$} von $A$ bei Eingabe $w$ ist ein Paar $K=(p, u)$, wobei $p \in Q$ (aktueller Zustand von $A$) und $u \in \Sigma^*$ (der noch zu lesende "Rest" der Eingabe $w$).
+
+    Damit ist eine Konfiguration eine vollständige Beschreibung einer Momentsituation von $A$ bei Eingabe $w$.
+\end{definition}
+
+\begin{example}
+    $A_1$ mit $0110$:
+
+    \begin{align*}
+        K_0 &= (q_0, 0110) \\
+        K_1 &= (q_1, 110) \\
+        K_2 &= (q_2, 10) \\
+        K_3 &= (q_3, 0) \\
+        K_4 &= (q_4, \lambda)
+    \end{align*}
+\end{example}
+
+\begin{definition}
+    Wieder sei $A = (Q, \Sigma, \delta, q_0, F)$ ein endlicher Automat und $w\in \Sigma^*$ eine Eingabe. Wir definieren eine binäre Relation $\vdash$ über der Menge der Konfigurationen: $\vdash \subseteq (Q, \Sigma^*) \times (Q, \Sigma^*)$ auf folgende Weise:
+    Es gilt $K \vdash K'$ für zwei Konfigurationen $K$ und $K'$ mit $K=(p,u)$ und $K'=(q,v)$
+
+    \[ \xleftrightarrow[\text{def.}]{} \bigvee_{x \in \Sigma} (u = xv \text{ und } \delta(p,x)=q)\]
+    
+    $K'$ heißt \textit{unmittelbare Nachfolgekonfiguration} von $k$. Der Übergang von $K$ zu $K'$ entspricht einem Berechnungsschritt von $A$ mit $w$ und erfolgt gemäß $\delta$. $\vdash$ heißt \textit{Übergangsrelation}.
+\end{definition}
 
 \end{document}
